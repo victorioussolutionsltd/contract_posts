@@ -15,8 +15,6 @@ const Lister = () => {
 		});
 	}, []);
 
-	return <div>TODO - wire up lister component</div>
-
 	const onDeletePost = (id) => {
 		// TODO: implement
 	}
@@ -25,14 +23,25 @@ const Lister = () => {
 		// TODO: implement
 	}
 
-	// TODO: implement render method, using Post and CreatePost e.g.
-	//				...
-	// 				<div className="postList">
-	//					...
-	//					<CreatePost />
-	// 				</div>
-	//				...
+	if (loading) {
+		return <>Loading...</>
+	}
 
+	return <div className="postList">
+		{
+			allPosts.length === 0 ? <>No posts available...</> : null
+		}
+		{
+			allPosts?.map((post) => {
+				<Post
+					title={post?.title}
+					body={post?.body}
+					author={post?.author}
+					onDelete={onDeletePost}
+				/>
+			})}
+		<CreatePost />
+	</div>
 
 };
 
