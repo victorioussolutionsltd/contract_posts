@@ -10,12 +10,11 @@ const CreatePost = ({ onCreate }) => {
 	const postReducer = (state, { type, ...payload }) => {
 		switch (type) {
 			case 'update': {
-
+				return { ...state, [payload?.key]: payload?.value }
 			}
-			case 'reset':
-			default: return initialState;
+			case 'reset': return initialState;
+			default: return state;
 		}
-		// TODO: implement action handlers
 	};
 
 	const [{ title, body, author }, dispatch] = useReducer(postReducer, initialState)
