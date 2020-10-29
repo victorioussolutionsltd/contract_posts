@@ -15,12 +15,13 @@ const Lister = () => {
 		});
 	}, []);
 
-	const onDeletePost = (id) => {
-		// TODO: implement
-	}
+	const onDeletePost = (id) =>
+		setPosts(allPosts.filter((post) => post?.id !== id))
+
 
 	const onCreatePost = post => {
-		// TODO: implement
+		const id = allPosts.length > 0 ? allPosts[allPosts.length - 1]?.id + 1 : 1;
+		setPosts([...allPosts, { id, ...post }])
 	}
 
 	if (loading) {
@@ -32,15 +33,17 @@ const Lister = () => {
 			allPosts.length === 0 ? <>No posts available...</> : null
 		}
 		{
-			allPosts?.map((post) => {
+			allPosts?.map((post, index) =>
 				<Post
+					key={`post${index}`}
+					id={post?.id}
 					title={post?.title}
 					body={post?.body}
 					author={post?.author}
 					onDelete={onDeletePost}
 				/>
-			})}
-		<CreatePost />
+			)}
+		<CreatePost onCreate={onCreatePost} />
 	</div>
 
 };
